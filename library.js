@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read = 'Not Read') {
+function Book(title, author, pages, read = false) {
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -9,7 +9,7 @@ function Book(title, author, pages, read = 'Not Read') {
 
 Book.prototype.info = function () {
   return `${this.title} by ${author}, ${this.pages} pages, ${
-    this.read ? 'read' : 'not read yet'
+    this.read ? 'Read' : ''
   }`;
 };
 
@@ -57,6 +57,9 @@ function generateEditButtons() {
   buttonContainer.appendChild(deleteButton);
   return buttonContainer;
 }
+
+// const addBookButton = document.querySelector('.add-button');
+// addBookButton.addEventListener('click', )
 
 addBookToLibrary('Testttitle2', 'McAuthor McGuy', 600);
 displayBooks();
