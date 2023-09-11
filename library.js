@@ -58,8 +58,9 @@ function generateEditButtons() {
   return buttonContainer;
 }
 
-// const addBookButton = document.querySelector('.add-button');
-// addBookButton.addEventListener('click', )
+const editDialog = document.querySelector('#editBookDialog');
+const addBookButton = document.querySelector('.add-button');
+addBookButton.addEventListener('click', () => editDialog.showModal());
 
 addBookToLibrary('Testttitle2', 'McAuthor McGuy', 600);
 displayBooks();
