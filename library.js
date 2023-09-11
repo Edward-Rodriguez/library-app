@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read = false) {
+function Book(title, author, pages, read = 'Not Read') {
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -14,26 +14,32 @@ Book.prototype.info = function () {
 };
 
 function addBookToLibrary(title, author, pages, read) {
-  myLibrary.push(new Book(title, author, pages, read));
+  const newBook = new Book(title, author, pages, read);
+  myLibrary.push(newBook);
+  addBookToTable(newBook);
 }
 
-function displayBooks() {
+function addBookToTable(book) {
   const tableBody = document.querySelector('tbody');
-  myLibrary.forEach((book) => {
-    const newBook = document.createElement('tr');
-    newBook.appendChild(createTableData(book.title));
-    newBook.appendChild(createTableData(book.author));
-    newBook.appendChild(createTableData(book.pages));
-    newBook.appendChild(createTableData(book.read));
-    newBook.appendChild(generateEditButtons());
-    tableBody.appendChild(newBook);
-  });
+  const newBook = document.createElement('tr');
+  newBook.appendChild(createTableData(book.title));
+  newBook.appendChild(createTableData(book.author));
+  newBook.appendChild(createTableData(book.pages));
+  newBook.appendChild(createTableData(book.read));
+  newBook.appendChild(generateEditButtons());
+  tableBody.appendChild(newBook);
 }
 
 function createTableData(bookInfo) {
   const newBookTableData = document.createElement('td');
   newBookTableData.textContent = bookInfo;
   return newBookTableData;
+}
+
+function addAllBooksToTable() {
+  myLibrary.forEach((book) => {
+    addBookToTable(book);
+  });
 }
 
 function generateEditButtons() {
@@ -52,5 +58,5 @@ function generateEditButtons() {
   return buttonContainer;
 }
 
-addBookToLibrary('Testttitle', 'McAuthor', 6000, true);
+addBookToLibrary('Testttitle2', 'McAuthor McGuy', 600);
 displayBooks();
