@@ -52,13 +52,5 @@ function generateEditButtons() {
   return buttonContainer;
 }
 
-function getBookInfoFromUser() {
-  let newBookTitle = prompt('Enter title of the book');
-  let newBookAuthor = prompt("Enter author's name");
-  let newBookPages = +prompt('Enter the number of pages in the book');
-  let hasRead = prompt('Have your read this book?');
-  myLibrary.push();
-}
-
 addBookToLibrary('Testttitle', 'McAuthor', 6000, true);
 displayBooks();

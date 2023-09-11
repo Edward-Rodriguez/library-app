@@ -25,6 +25,29 @@ header > h1 {
   letter-spacing: 2px;
 }
 
+.add-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.add-button > img {
+  width: 48px;
+  height: auto;
+}
+
+.add-button:hover {
+  cursor: pointer;
+  font-weight: 600;
+  scale: 1.2;
+}
+
 table {
   border-collapse: collapse;
   border: 1px solid rgb(200, 200, 200);
