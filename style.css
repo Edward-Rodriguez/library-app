@@ -52,7 +52,7 @@ td {
 .buttons {
   display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
 }
 
 [class^='icon'] {
