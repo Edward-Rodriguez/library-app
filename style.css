@@ -83,3 +83,7 @@ td {
   height: auto;
   cursor: pointer;
 }
+
+.error {
+  border: 2px solid #e06c7a;
+}

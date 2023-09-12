@@ -1,4 +1,9 @@
 const myLibrary = [];
+const addEditBookDialog = document.querySelector('#addEditBookDialog');
+const addBookButton = document.querySelector('.add-button');
+const submitButton = document.querySelector('#ok-btn');
+const inputTextFields = document.querySelectorAll("input:not([type='radio'])");
+const radioButtons = document.querySelectorAll("input[type='radio']");
 
 function Book(title, author, pages, read = false) {
   this.title = title;
@@ -13,8 +18,7 @@ Book.prototype.info = function () {
   }`;
 };
 
-function addBookToLibrary(title, author, pages, read) {
-  const newBook = new Book(title, author, pages, read);
+function addBookToLibrary(newBook) {
   myLibrary.push(newBook);
   addBookToTable(newBook);
 }
@@ -58,9 +62,44 @@ function generateEditButtons() {
   return buttonContainer;
 }
 
-const editDialog = document.querySelector('#editBookDialog');
-const addBookButton = document.querySelector('.add-button');
-addBookButton.addEventListener('click', () => editDialog.showModal());
+function onSubmit(ev) {
+  ev.preventDefault();
+  let tempBook = new Book();
+  let isValidInput = true;
+  [...inputTextFields].forEach((input) => {
+    if (input.value.trim() === '') {
+      isValidInput = false;
+      input.classList.add('error');
+    } else {
+      tempBook[input.name] = input.value;
+      input.classList.remove('error');
+    }
+  });
+  tempBook.read = setReadStatus();
+  if (isValidInput) {
+    addBookToLibrary(tempBook);
+    addEditBookDialog.close();
+  }
+}
+
+function setReadStatus() {
+  let userchoice = [...radioButtons].find((btn) => btn.checked).value;
+  switch (userchoice) {
+    case 'not-read':
+    case false:
+      return null;
+    case 'in-progress':
+      return 'In Progress';
+    case 'read':
+      return 'Read';
+  }
+}
+
+addBookButton.addEventListener('click', () => addEditBookDialog.showModal());
+submitButton.addEventListener('click', (ev) => onSubmit(ev));
+// [...inputs].forEach((input) => {
+//   input.addEventListener('change', (ev) => (input.value = ev.target.value));
+// });
 
 addBookToLibrary('Testttitle2', 'McAuthor McGuy', 600);
-displayBooks();
+// displayBooks();
