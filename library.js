@@ -4,12 +4,15 @@ const addBookButton = document.querySelector('.add-button');
 const submitButton = document.querySelector('#ok-btn');
 const inputTextFields = document.querySelectorAll("input:not([type='radio'])");
 const radioButtons = document.querySelectorAll("input[type='radio']");
+const deleteButtons = document.querySelectorAll('.icon-delete');
+let bookId = 2;
 
 function Book(title, author, pages, read = false) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.id = ++bookId;
 }
 
 Book.prototype.info = function () {
@@ -26,11 +29,12 @@ function addBookToLibrary(newBook) {
 function addBookToTable(book) {
   const tableBody = document.querySelector('tbody');
   const newBook = document.createElement('tr');
+  newBook.setAttribute('data-book-id', book.id);
   newBook.appendChild(createTableData(book.title));
   newBook.appendChild(createTableData(book.author));
   newBook.appendChild(createTableData(book.pages));
   newBook.appendChild(createTableData(book.read));
-  newBook.appendChild(generateEditButtons());
+  newBook.appendChild(initButtons());
   tableBody.appendChild(newBook);
 }
 
@@ -46,20 +50,31 @@ function addAllBooksToTable() {
   });
 }
 
-function generateEditButtons() {
+function initButtons() {
   const buttonContainer = document.createElement('td');
   buttonContainer.classList.add('buttons');
+  const editButton = generateEditButton();
+  const deleteButton = generateDeleteButton();
+  buttonContainer.appendChild(editButton);
+  buttonContainer.appendChild(deleteButton);
+  return buttonContainer;
+}
+
+function generateEditButton() {
   const editButton = document.createElement('img');
   editButton.setAttribute('class', 'icon-edit');
   editButton.setAttribute('src', 'icons/icon_edit-blue.svg');
   editButton.setAttribute('alt', 'edit pencil');
+  return editButton;
+}
+
+function generateDeleteButton() {
   const deleteButton = document.createElement('img');
   deleteButton.setAttribute('class', 'icon-delete');
   deleteButton.setAttribute('src', 'icons/icon_delete-blue.svg');
   deleteButton.setAttribute('alt', 'recycling bin');
-  buttonContainer.appendChild(editButton);
-  buttonContainer.appendChild(deleteButton);
-  return buttonContainer;
+  deleteButton.addEventListener('click', (ev) => removeBookFromTable(ev));
+  return deleteButton;
 }
 
 function onSubmit(ev) {
@@ -95,11 +110,25 @@ function setReadStatus() {
   }
 }
 
+function removeBookFromLibrary(book) {
+  const indexOfBook = myLibrary.findIndex(book);
+  myLibrary.splice(indexOfBook, 1);
+}
+
+function removeBookFromTable(ev) {
+  const parentTableRow = ev.target.parentElement.parentElement;
+  const bookIdToRemove = +parentTableRow.getAttribute('data-book-id');
+  parentTableRow.parentElement.removeChild(parentTableRow);
+}
+
 addBookButton.addEventListener('click', () => addEditBookDialog.showModal());
 submitButton.addEventListener('click', (ev) => onSubmit(ev));
+[...deleteButtons].forEach((button) =>
+  button.addEventListener('click', (ev) => removeBookFromTable(ev))
+);
 // [...inputs].forEach((input) => {
 //   input.addEventListener('change', (ev) => (input.value = ev.target.value));
 // });
 
-addBookToLibrary('Testttitle2', 'McAuthor McGuy', 600);
+addBookToLibrary(new Book('Testttitle2', 'McAuthor McGuy', 600));
 // displayBooks();
