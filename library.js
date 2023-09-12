@@ -5,7 +5,7 @@ const submitButton = document.querySelector('#ok-btn');
 const inputTextFields = document.querySelectorAll("input:not([type='radio'])");
 const radioButtons = document.querySelectorAll("input[type='radio']");
 const deleteButtons = document.querySelectorAll('.icon-delete');
-let bookId = 2;
+let bookId = 0;
 
 function Book(title, author, pages, read = false) {
   this.title = title;
@@ -110,8 +110,10 @@ function setReadStatus() {
   }
 }
 
-function removeBookFromLibrary(book) {
-  const indexOfBook = myLibrary.findIndex(book);
+function removeBookFromLibrary(bookToRemove) {
+  const indexOfBook = myLibrary.findIndex(
+    (book) => book.id === bookToRemove.id
+  );
   myLibrary.splice(indexOfBook, 1);
 }
 
@@ -119,6 +121,7 @@ function removeBookFromTable(ev) {
   const parentTableRow = ev.target.parentElement.parentElement;
   const bookIdToRemove = +parentTableRow.getAttribute('data-book-id');
   parentTableRow.parentElement.removeChild(parentTableRow);
+  removeBookFromLibrary(myLibrary.find((book) => book.id == bookIdToRemove));
 }
 
 addBookButton.addEventListener('click', () => addEditBookDialog.showModal());
@@ -130,5 +133,16 @@ submitButton.addEventListener('click', (ev) => onSubmit(ev));
 //   input.addEventListener('change', (ev) => (input.value = ev.target.value));
 // });
 
-addBookToLibrary(new Book('Testttitle2', 'McAuthor McGuy', 600));
+addBookToLibrary(
+  new Book("Man's Search for Meaning", 'Viktor E. Frankl', 200, 'Read')
+);
+addBookToLibrary(
+  new Book(
+    'Self-Compassion: The Proven Power of Being Kind to Yourself',
+    'Kristin Neff',
+    329,
+    'In Progress'
+  )
+);
+addBookToLibrary(new Book('Testttitle2', 'McAuthor McGuy', 600, ''));
 // displayBooks();
