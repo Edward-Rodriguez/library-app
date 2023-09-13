@@ -87,3 +87,130 @@ td {
 .error {
   border: 2px solid #e06c7a;
 }
+
+dialog {
+  border: 2px solid #6c7ae0;
+  border-radius: 8px;
+  margin: 20vh auto;
+}
+
+dialog > form#addEditBookForm {
+  display: grid;
+  max-width: 600px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(6, minmax(48px, auto));
+  padding: 24px;
+  gap: 8px;
+  grid-template-areas:
+    'header header'
+    'title title'
+    'author author'
+    'pages pages'
+    'read read'
+    'btn btn';
+}
+
+form .title,
+form .author,
+form .pages,
+form .read {
+  display: grid;
+  grid-template-columns: 64px minmax(250px, auto);
+  align-items: center;
+}
+
+form .form-row > label {
+  padding: 16px;
+  justify-self: end;
+}
+
+form .form-row input[type='text'],
+form .form-row input[type='number'] {
+  background-color: #ffffff;
+  border: 1px solid #d6d9dc;
+  border-radius: 3px;
+  width: 100%;
+  padding: 7px;
+  font-size: 14px;
+}
+
+.radio-buttons {
+  grid-column: 2 / 3;
+}
+
+input[type='text']:focus,
+input[type='text']:active {
+  border: 2px solid #6c7ae0;
+}
+
+form h1 {
+  grid-area: header;
+  color: #6c7ae0;
+  text-align: center;
+}
+
+form .title {
+  grid-area: title;
+}
+
+form .author {
+  grid-area: author;
+}
+
+form .pages {
+  grid-area: pages;
+}
+
+form .read {
+  border: none;
+  grid-area: read;
+  align-items: center;
+}
+
+form .read .legend {
+  display: block;
+  text-align: end;
+  padding-right: 16px;
+}
+
+.radio-buttons {
+  display: flex;
+}
+
+input[type='radio'] {
+  display: inline;
+  width: auto;
+  margin-right: 3px;
+}
+
+fieldset label {
+  display: block;
+  margin-right: 16px;
+}
+
+form .buttons {
+  display: flex;
+  grid-area: btn;
+  justify-content: center;
+}
+
+#ok-btn {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #5995da;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 40px;
+  cursor: pointer;
+}
+
+#cancel-btn {
+  font-size: 16px;
+  font-weight: bold;
+  color: #5995da;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 40px;
+  cursor: pointer;
+}
