@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
 
 html {
   box-sizing: border-box;
@@ -20,7 +21,9 @@ html {
 }
 
 header > h1 {
-  margin: 64px;
+  display: inline-block;
+  margin: 64px 0px;
+  font-family: 'Merriweather', serif;
   font-size: 4rem;
   letter-spacing: 2px;
 }

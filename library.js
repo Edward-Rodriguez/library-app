@@ -68,11 +68,21 @@ function generateEditButton() {
 }
 
 function generateDeleteButton() {
+  const deleteButtonIcons = {
+    blue: 'icons/icon_delete-blue.svg',
+    red: 'icons/icon_delete-red.svg',
+  };
   const deleteButton = document.createElement('img');
   deleteButton.setAttribute('class', 'icon-delete');
-  deleteButton.setAttribute('src', 'icons/icon_delete-blue.svg');
+  deleteButton.setAttribute('src', deleteButtonIcons.blue);
   deleteButton.setAttribute('alt', 'recycling bin');
   deleteButton.addEventListener('click', (ev) => removeBookFromTable(ev));
+  deleteButton.addEventListener('mouseover', () => {
+    deleteButton.setAttribute('src', deleteButtonIcons.red);
+  });
+  deleteButton.addEventListener('mouseleave', () => {
+    deleteButton.setAttribute('src', deleteButtonIcons.blue);
+  });
   return deleteButton;
 }
 
