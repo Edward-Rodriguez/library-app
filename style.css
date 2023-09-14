@@ -94,6 +94,10 @@ dialog {
   margin: 20vh auto;
 }
 
+dialog::backdrop {
+  backdrop-filter: blur(1px);
+}
+
 dialog > form#addEditBookForm {
   display: grid;
   max-width: 600px;
@@ -167,8 +171,9 @@ form .read {
   align-items: center;
 }
 
-form .read .legend {
+form .read legend {
   display: block;
+  float: left;
   text-align: end;
   padding-right: 16px;
 }
