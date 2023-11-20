@@ -126,6 +126,15 @@ function validateForm() {
   return isValid;
 }
 
+function clearErrors() {
+  [titleInput, authorInput, pagesInput].forEach((input) => {
+    input.classList.remove('invalid');
+  });
+  [titleError, authorError, pagesError].forEach((error) => {
+    error.textContent = '';
+  });
+}
+
 function checkTitle() {
   if (titleInput.validity.valueMissing) {
     titleError.textContent = 'Enter title of book';
@@ -198,6 +207,7 @@ function removeBookFromLibrary(bookId) {
 }
 
 function handleEditButtonClick(ev) {
+  clearErrors();
   const bookId = +getTableRowParent(ev.target).getAttribute('data-book-id');
   const bookToUpdate = myLibrary.find((book) => book.id === bookId);
   [titleInput, authorInput, pagesInput].forEach((input) => {
@@ -222,7 +232,11 @@ function getTableRowParent(node) {
   return node.closest('tr[data-book-id]');
 }
 
-addBookButton.addEventListener('click', () => addEditBookDialog.showModal());
+addBookButton.addEventListener('click', () => {
+  clearErrors();
+  form.reset();
+  addEditBookDialog.showModal();
+});
 cancelButton.addEventListener('click', (ev) => {
   ev.preventDefault();
   addEditBookDialog.close();
