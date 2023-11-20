@@ -112,20 +112,27 @@ function onSubmit(ev) {
     form.reset();
   }
 }
-
-function validateForm() {
-  isValid = true;
-  [titleInput, authorInput, pagesInput].forEach((input) => {
-    if (
-      input.value.trim() === '' ||
-      (input.name === 'pages' && isNaN(input.value))
-    ) {
-      isValid = false;
-      input.classList.add('error');
-    } else input.classList.remove('error');
-  });
-  return isValid;
+function validateForm(ev) {
+  if (checkTitle() && checkAuthor() && checkPages()) {
+    return true;
+  } else {
+    ev.preventDefault();
+    return false;
+  }
 }
+// function validateForm() {
+//   isValid = true;
+//   [titleInput, authorInput, pagesInput].forEach((input) => {
+//     if (
+//       input.value.trim() === '' ||
+//       (input.name === 'pages' && isNaN(input.value))
+//     ) {
+//       isValid = false;
+//       input.classList.add('error');
+//     } else input.classList.remove('error');
+//   });
+//   return isValid;
+// }
 
 function clearErrors() {
   [titleInput, authorInput, pagesInput].forEach((input) => {
@@ -140,9 +147,29 @@ function checkTitle() {
   if (titleInput.validity.valueMissing) {
     titleError.textContent = 'Enter title of book';
     titleInput.classList.add('invalid');
+    return false;
   } else {
     titleError.textContent = '';
     titleInput.classList.remove('invalid');
+    return true;
+  }
+}
+
+function checkPages() {
+  if (!pagesInput.validity.valid) {
+    pagesInput.classList.add('invalid');
+    if (pagesInput.validity.valueMissing) {
+      pagesError.textContent = 'Enter number of pages';
+    } else if (pagesInput.validity.rangeUnderflow) {
+      pagesError.textContent = 'Enter a number greater than 0';
+    } else if (pagesInput.validity.rangeOverflow) {
+      pagesError.textContent = 'Enter a number less than 99,999';
+    }
+    return false;
+  } else {
+    pagesError.textContent = '';
+    pagesInput.classList.remove('invalid');
+    return true;
   }
 }
 
@@ -164,23 +191,9 @@ function checkAuthor() {
   } else {
     authorError.textContent = '';
     authorInput.classList.remove('invalid');
+    return true;
   }
-}
-
-function checkPages() {
-  if (!pagesInput.validity.valid) {
-    pagesInput.classList.add('invalid');
-    if (pagesInput.validity.valueMissing) {
-      pagesError.textContent = 'Enter number of pages';
-    } else if (pagesInput.validity.rangeUnderflow) {
-      pagesError.textContent = 'Enter a number greater than 0';
-    } else if (pagesInput.validity.rangeOverflow) {
-      pagesError.textContent = 'Enter a number less than 99,999';
-    }
-  } else {
-    pagesError.textContent = '';
-    pagesInput.classList.remove('invalid');
-  }
+  return false;
 }
 
 function generateConstraintBlock(char) {
