@@ -20,6 +20,7 @@ let bookId = 0;
 
 titleInput.addEventListener('input', () => checkTitle());
 authorInput.addEventListener('input', () => checkAuthor());
+pagesInput.addEventListener('input', () => checkPages());
 
 class Book {
   constructor(title, author, pages, read) {
@@ -163,6 +164,22 @@ function checkAuthor() {
   } else {
     authorError.textContent = '';
     authorInput.classList.remove('invalid');
+  }
+}
+
+function checkPages() {
+  if (!pagesInput.validity.valid) {
+    pagesInput.classList.add('invalid');
+    if (pagesInput.validity.valueMissing) {
+      pagesError.textContent = 'Enter number of pages';
+    } else if (pagesInput.validity.rangeUnderflow) {
+      pagesError.textContent = 'Enter a number greater than 0';
+    } else if (pagesInput.validity.rangeOverflow) {
+      pagesError.textContent = 'Enter a number less than 99,999';
+    }
+  } else {
+    pagesError.textContent = '';
+    pagesInput.classList.remove('invalid');
   }
 }
 
