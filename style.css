@@ -87,10 +87,6 @@ td {
   cursor: pointer;
 }
 
-.error {
-  border: 2px solid #e06c7a;
-}
-
 dialog {
   border: 2px solid #6c7ae0;
   border-radius: 8px;
@@ -107,7 +103,7 @@ dialog > form#addEditBookForm {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(6, minmax(48px, auto));
   padding: 24px;
-  gap: 8px;
+  gap: 12px;
   grid-template-areas:
     'header header'
     'title title'
@@ -127,12 +123,12 @@ form .read {
 }
 
 form .form-row > label {
-  padding: 16px;
+  padding: 8px 16px;
   justify-self: end;
 }
 
-form .form-row input[type='text'],
-form .form-row input[type='number'] {
+.form-row input[type='text'],
+.form-row input[type='number'] {
   background-color: #ffffff;
   border: 1px solid #d6d9dc;
   border-radius: 3px;
@@ -158,14 +154,23 @@ form h1 {
 
 form .title {
   grid-area: title;
+  grid-template-areas:
+    'label input'
+    '. error';
 }
 
 form .author {
   grid-area: author;
+  grid-template-areas:
+    'label input'
+    '. error';
 }
 
 form .pages {
   grid-area: pages;
+  grid-template-areas:
+    'label input'
+    '. error';
 }
 
 form .read {
@@ -221,4 +226,25 @@ form .buttons {
   border-radius: 3px;
   padding: 10px 40px;
   cursor: pointer;
+}
+
+.error {
+  display: block;
+  height: 12px;
+  grid-area: error;
+  color: red;
+  font-size: 0.8rem;
+}
+
+form .form-row input.invalid {
+  outline: none;
+  background-color: rgba(240, 128, 128, 0.235);
+  border-color: red;
+}
+
+.special-char {
+  background-color: rgb(233, 233, 233);
+  border-radius: 4px;
+  padding: 0px 5px;
+  margin-right: 4px;
 }

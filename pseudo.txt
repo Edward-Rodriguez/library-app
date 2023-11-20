@@ -1,0 +1,18 @@
+form validation
+
+title - const
+html span error element
+
+function checkTitle()
+    if title.validity.valueMissing
+        titleError.textContent = enter title of book
+
+function checkAuthor()
+    if author.validity.valueMissing
+        authorError.textContent = enter name of author
+    else if author.validity
+
+css
+input:invalid styling
+input:focus:invalid styling
+.error class for error messages span

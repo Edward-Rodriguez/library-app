@@ -10,10 +10,16 @@ const pagesInput = document.querySelector("input[name='pages']");
 const readInput = document.querySelectorAll("input[type='radio']");
 const cancelButton = document.querySelector('#cancel-btn');
 const submitButton = document.querySelector('#ok-btn');
+const titleError = document.querySelector('#title + .error');
+const authorError = document.querySelector('#author + .error');
+const pagesError = document.querySelector('#pages + .error');
 
 let isEditingMode = false;
 let bookIdToEdit = null;
 let bookId = 0;
+
+titleInput.addEventListener('input', () => checkTitle());
+authorInput.addEventListener('input', () => checkAuthor());
 
 class Book {
   constructor(title, author, pages, read) {
@@ -120,6 +126,44 @@ function validateForm() {
   return isValid;
 }
 
+function checkTitle() {
+  if (titleInput.validity.valueMissing) {
+    titleError.textContent = 'Enter title of book';
+    titleInput.classList.add('invalid');
+  } else {
+    titleError.textContent = '';
+    titleInput.classList.remove('invalid');
+  }
+}
+
+function checkAuthor() {
+  const constraint = /^[a-zA-Z,.'\-\s]+$/i;
+  if (authorInput.validity.valueMissing) {
+    authorError.textContent = 'Enter author name';
+    authorInput.classList.add('invalid');
+  } else if (!constraint.test(authorInput.value)) {
+    authorError.textContent = 'Valid characters are: ';
+    authorInput.classList.add('invalid');
+    const uppercase = generateConstraintBlock('A-Z');
+    const lowercase = generateConstraintBlock('a-z');
+    const period = generateConstraintBlock('.');
+    const comma = generateConstraintBlock(',');
+    const hyphen = generateConstraintBlock('-');
+    const apostrophe = generateConstraintBlock("'");
+    authorError.append(uppercase, lowercase, period, comma, hyphen, apostrophe);
+  } else {
+    authorError.textContent = '';
+    authorInput.classList.remove('invalid');
+  }
+}
+
+function generateConstraintBlock(char) {
+  const charBlock = document.createElement('span');
+  charBlock.classList.add('special-char');
+  charBlock.textContent = char;
+  return charBlock;
+}
+
 function updateBook(title, author, pages, read) {
   myLibrary.forEach((book) => {
     if (book.id === bookIdToEdit) {
@@ -190,7 +234,7 @@ addBookToLibrary(
   'Self-Compassion: The Proven Power of Being Kind to Yourself',
   'Kristin Neff',
   329,
-  'In Progress'
+  'In Progress',
 );
 addBookToLibrary('Test', 'John Doe', 319, 'Read');
 addBookToLibrary('Red Planet', 'Dr.John', 999, null);
